@@ -58,10 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const gallery = document.getElementById("gallery");
   if (gallery) {
+    gallery.innerHTML = "";
     PHOTOS.forEach(n => {
       const img = document.createElement("img");
       img.src = "photos/" + n;
       img.className = "photo";
+      img.alt = "Tyrell & Kat";
+      img.loading = "lazy";
       gallery.appendChild(img);
     });
   }
@@ -71,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const timelineWrap = document.getElementById("timelineWrap");
   if (timelineWrap) {
+    timelineWrap.innerHTML = "";
     TIMELINE.forEach(item => {
       const d = document.createElement("div");
       d.className = "tItem";
@@ -97,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       c++;
       broomCount.textContent = c;
       localStorage.setItem("broom", c);
-      popHearts();
+      window.popHearts();
     };
   }
 
@@ -105,27 +109,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const yesBtn = document.getElementById("yesBtn");
 
   if (noBtn && yesBtn) {
-    noBtn.onclick = () => {
+    noBtn.onclick = (e) => {
+      e.preventDefault?.();
       noBtn.style.position = "fixed";
       noBtn.style.left = Math.random() * 70 + "vw";
       noBtn.style.top = Math.random() * 60 + "vh";
       yesBtn.style.transform = "scale(1.15)";
-      popHearts();
+      window.popHearts();
     };
   }
 
 });
 
-function popHearts() {
-  for (let i = 0; i < 10; i++) {
+window.popHearts = function () {
+  for (let i = 0; i < 12; i++) {
     const h = document.createElement("div");
-    h.textContent = "💖";
+    h.textContent = Math.random() > 0.5 ? "💖" : "💘";
     h.style.position = "fixed";
     h.style.left = Math.random() * 100 + "vw";
     h.style.top = "90vh";
-    h.style.transition = "1s";
+    h.style.transition = "1.1s";
+    h.style.zIndex = "9999";
     document.body.appendChild(h);
     setTimeout(() => { h.style.top = "0"; h.style.opacity = "0"; }, 50);
-    setTimeout(() => h.remove(), 1000);
+    setTimeout(() => h.remove(), 1200);
   }
-}
+};
